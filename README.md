@@ -1,18 +1,11 @@
 Building a Local RAG-Based Chatbot Using
------------
+--------------------------------------
 - ChromaDB as a vector database
-- LangChain4J for RAG orchestration in backend,
-- Streamlit for Frontend UI
-- Ollama for model servicing
-- Llama3.2 as an inferencing model
-- Apache iText for document parsing
-
-Frameworks and Tools 
----------------------
-- ChromaDB to store embeddings
-- LangChain for document retrieval and more backend orchestration
-- Ollama for running LLMs locally
+- LangChain4J or LangChain python for RAG orchestration in backend
 - Streamlit for an interactive chatbot UI
+- Ollama for model servicing locally
+- Llama3.2 as an inferencing model inside Ollama
+- LangChain community for document parsing
 
 OLaMA
 -----------
@@ -59,4 +52,4 @@ Langchain Text Splitters
 
 ChromaDB
 -----------
-- for vector database
+- for vector database to store split documents.
