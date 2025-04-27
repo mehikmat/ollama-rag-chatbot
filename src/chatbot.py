@@ -4,8 +4,7 @@ import streamlit as st
 from dotenv import load_dotenv
 from langchain.chains import RetrievalQA
 from langchain.memory import ConversationBufferMemory
-# from langchain_chroma import Chroma
-from langchain_community.vectorstores import FAISS
+from langchain_chroma import Chroma
 from langchain_ollama import ChatOllama
 from langchain_ollama.embeddings import OllamaEmbeddings
 
@@ -21,7 +20,12 @@ st.title("Chatbot")
 MODEL = "llama3.2"
 MAX_HISTORY = 5
 CONTEXT_SIZE = 8000
-VECTOR_DB_PATH = os.path.join(os.path.dirname(__file__), "../chroma_db")
+VECTOR_DB_PATH = "../chroma_db"
+
+if os.path.exists(VECTOR_DB_PATH) and os.path.isdir(VECTOR_DB_PATH):
+    print(":: Vector DB exists.")
+else:
+    print(":: Vector DB does not exist.")
 
 # ---- Session State Setup ---- #
 if "chat_history" not in st.session_state:
@@ -35,8 +39,7 @@ llm = ChatOllama(model=MODEL, streaming=True)
 embeddings = OllamaEmbeddings(model="mxbai-embed-large")
 
 # Initialize Chroma vector store
-# vectorstore = Chroma(persist_directory="../chroma_db", embedding_function=embeddings)
-vectorstore = FAISS.load_local(folder_path=VECTOR_DB_PATH, embeddings=embeddings, allow_dangerous_deserialization=True)
+vectorstore = Chroma(persist_directory=VECTOR_DB_PATH, collection_name="chatbot_collection", embedding_function=embeddings)
 
 # Initialize KB retriever
 retriever = vectorstore.as_retriever(search_type="similarity")

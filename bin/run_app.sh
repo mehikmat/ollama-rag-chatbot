@@ -1,2 +1,1 @@
-cd ../src
-streamlit run chatbot.py
+streamlit run ../src/chatbot.py

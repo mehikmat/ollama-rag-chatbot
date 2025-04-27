@@ -12,6 +12,7 @@ def ingestDocuments(directory_path, persist_directory):
     embeddings = OllamaEmbeddings(model="mxbai-embed-large")
 
     split_documents = []
+    doc_ids = []
     input_path = os.path.abspath(directory_path)
     # Iterate through each file in the directory
     for filename in os.listdir(input_path):
@@ -24,7 +25,8 @@ def ingestDocuments(directory_path, persist_directory):
                 split = file.read().strip()  # Read the content and remove leading/trailing whitespace
 
             # Create a document ID and metadata
-            metadata = {"id": filename, "source": file_path, "filename": filename}
+            metadata = {"source": file_path, "filename": filename}
+            doc_ids.append(filename)
             split_documents.append(Document(page_content=split, metadata=metadata))
 
     # Store documents in ChromaDB
@@ -32,6 +34,7 @@ def ingestDocuments(directory_path, persist_directory):
         collection_name="chatbot_collection",
         documents=split_documents,  # Ensure split_documents contains valid data
         embedding=embeddings,
+        ids=doc_ids,
         persist_directory=persist_directory
     )
 
@@ -39,7 +42,11 @@ def ingestDocuments(directory_path, persist_directory):
     print("✅ Data successfully stored in ChromaDB!")
 
     # Reload the vector store for retrieval
-    # vectorstore = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
+    vector_store = Chroma(collection_name="chatbot_collection", persist_directory=persist_directory, embedding_function=embeddings)
+    docs = vector_store.get()
+    # Count how many documents
+    num_docs = len(docs["ids"])
+    print(f":: Number of documents: {num_docs}")
     print("🔄 ChromaDB reloaded successfully!")
 
 
