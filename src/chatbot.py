@@ -5,6 +5,9 @@ from langchain.memory import ConversationBufferMemory
 from langchain_chroma import Chroma
 from langchain_ollama import ChatOllama
 from langchain_ollama.embeddings import OllamaEmbeddings
+import sys
+__import__('pysqlite3')
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 load_dotenv()
 
