@@ -8,9 +8,6 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 # load environment variables like user agent etc.
 load_dotenv()
 
-# base document output directory
-output_base_directory = "documents"
-
 
 def WebsiteLoader(urls_to_be_scrapped):
     loader = WebBaseLoader(urls_to_be_scrapped)
@@ -50,20 +47,19 @@ def sanitize_filename(filename: str) -> str:
 
 
 def saveSplits(document, document_splits, output_directory):
-    output_path = os.path.join(output_base_directory, output_directory)
     # Create directory if it doesn't exist
-    os.makedirs(output_path, exist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
 
     split_id = 0
     for document_split in document_splits:
         with open(os.path.join(
-                output_path, f"{sanitize_filename(document.metadata.get('source', ''))}_split_{split_id}.txt"),
+                output_directory, f"{sanitize_filename(document.metadata.get('source', ''))}_split_{split_id}.txt"),
                 "w", encoding="utf-8") as f:
             f.write(document_split)  # Write each split to the file
             f.write("\n")
             split_id += 1
 
-    print(f"Documents saved to {output_path}")
+    print(f"Documents saved to {output_directory}")
 
 
 def splitWebDocument(urls):
@@ -92,7 +88,7 @@ def splitWebDocument(urls):
         web_document_splits = text_splitter.split_text(web_document_text)
 
         # save splits of the document
-        saveSplits(web_document, web_document_splits, "../../web")
+        saveSplits(web_document, web_document_splits, "../web")
 
 
 if __name__ == '__main__':
