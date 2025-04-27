@@ -1,3 +1,5 @@
+import os
+
 import streamlit as st
 from dotenv import load_dotenv
 from langchain.chains import RetrievalQA
@@ -19,6 +21,7 @@ st.title("Chatbot")
 MODEL = "llama3.2"
 MAX_HISTORY = 5
 CONTEXT_SIZE = 8000
+VECTOR_DB_PATH = os.path.join(os.path.dirname(__file__), "../chroma_db")
 
 # ---- Session State Setup ---- #
 if "chat_history" not in st.session_state:
@@ -33,7 +36,7 @@ embeddings = OllamaEmbeddings(model="mxbai-embed-large")
 
 # Initialize Chroma vector store
 # vectorstore = Chroma(persist_directory="../chroma_db", embedding_function=embeddings)
-vectorstore = FAISS.load_local(folder_path="../chroma_db", embeddings=embeddings, allow_dangerous_deserialization=True)
+vectorstore = FAISS.load_local(folder_path=VECTOR_DB_PATH, embeddings=embeddings, allow_dangerous_deserialization=True)
 
 # Initialize KB retriever
 retriever = vectorstore.as_retriever(search_type="similarity")
