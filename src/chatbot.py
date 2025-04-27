@@ -16,7 +16,7 @@ st.title("Chatbot")
 # st.sidebar.header("Settings")
 
 MODEL = "llama3.2"
-MAX_HISTORY = 5
+MAX_HISTORY = 3
 CONTEXT_SIZE = 2000
 
 # ---- Session State Setup ---- #
