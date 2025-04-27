@@ -7,6 +7,13 @@ Building a Local RAG-Based Chatbot Using
 - Llama3.2 as an inferencing model
 - Apache iText for document parsing
 
+Frameworks and Tools 
+---------------------
+- ChromaDB to store embeddings
+- LangChain for document retrieval and more backend orchestration
+- Ollama for running LLMs locally
+- Streamlit for an interactive chatbot UI
+
 OLaMA
 -----------
  - Download and install ollama from https://ollama.com/download/Ollama-darwin.zip
