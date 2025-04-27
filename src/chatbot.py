@@ -2,7 +2,8 @@ import streamlit as st
 from dotenv import load_dotenv
 from langchain.chains import RetrievalQA
 from langchain.memory import ConversationBufferMemory
-from langchain_chroma import Chroma
+# from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_ollama import ChatOllama
 from langchain_ollama.embeddings import OllamaEmbeddings
 
@@ -31,7 +32,7 @@ llm = ChatOllama(model=MODEL, streaming=True)
 embeddings = OllamaEmbeddings(model="mxbai-embed-large")
 
 # Initialize Chroma vector store
-vectorstore = Chroma(persist_directory="../chroma_db", embedding_function=embeddings)
+vectorstore = FAISS.load_local(folder_path="../chroma_db", embeddings=embeddings, allow_dangerous_deserialization=True)
 
 # Initialize KB retriever
 retriever = vectorstore.as_retriever(search_type="similarity")
