@@ -36,6 +36,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
-chroma_db
 web
 .idea
