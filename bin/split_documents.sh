@@ -1,0 +1,1 @@
+python ../src/documents/splitter.py

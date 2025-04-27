@@ -1,0 +1,1 @@
+python ../src/kb/ingest.py
