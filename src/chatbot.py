@@ -32,6 +32,7 @@ llm = ChatOllama(model=MODEL, streaming=True)
 embeddings = OllamaEmbeddings(model="mxbai-embed-large")
 
 # Initialize Chroma vector store
+# vectorstore = Chroma(persist_directory="../chroma_db", embedding_function=embeddings)
 vectorstore = FAISS.load_local(folder_path="../chroma_db", embeddings=embeddings, allow_dangerous_deserialization=True)
 
 # Initialize KB retriever
