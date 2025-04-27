@@ -9,13 +9,15 @@ from langchain_ollama.embeddings import OllamaEmbeddings
 load_dotenv()
 
 # ---- Streamlit UI ---- #
-st.set_page_config(layout="wide")
-st.title("My Local Chatbot")
+st.set_page_config(layout="centered")
+st.title("Chatbot")
 
-st.sidebar.header("Settings")
-MODEL = st.sidebar.selectbox("Choose a Model", ["llama3.2", "deepseek-r1:1.5b"], index=0)
-MAX_HISTORY = st.sidebar.number_input("Max History", 1, 10, 2)
-CONTEXT_SIZE = st.sidebar.number_input("Context Size", 1024, 16384, 8192, step=1024)
+# do not show side bar
+# st.sidebar.header("Settings")
+
+MODEL = "llama3.2"
+MAX_HISTORY = 5
+CONTEXT_SIZE = 2000
 
 # ---- Session State Setup ---- #
 if "chat_history" not in st.session_state:
